@@ -3,168 +3,296 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>埃及 13 天 11 夜專屬旅程</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
+    <title>台南三天兩夜之旅</title>
     <style>
+        /* --- CSS 樣式區 --- */
         :root {
-            /* 配色方案：尼羅河深藍、沙漠金、紙莎草白 */
-            --primary-gold: #D4AF37; 
-            --primary-blue: #0F1F38;
-            --bg-color: #F5F5F0;
-            --card-bg: #FFFFFF;
-            --text-main: #333333;
-            --text-light: #666666;
+            --primary-color: #D2691E; /* 台南古蹟磚紅色 */
+            --bg-color: #FDF5E6;      /* 溫暖米色背景 */
+            --text-color: #333;
         }
 
         body {
-            font-family: 'Noto Sans TC', sans-serif;
+            font-family: "Microsoft JhengHei", sans-serif;
             background-color: var(--bg-color);
-            color: var(--text-main);
             margin: 0;
             padding: 0;
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
+            color: var(--text-color);
         }
 
-        /* 容器設定 */
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
+        /* 頂部資訊區 */
+        header {
+            background-color: #fff;
             padding: 20px;
-            min-height: 100vh;
             display: flex;
-            flex-direction: column;
-        }
-
-        /* 1. 頭像與標題區塊 */
-        .header-section {
-            text-align: center;
-            margin-bottom: 30px;
-            padding-top: 20px;
-            position: relative;
-        }
-
-        .avatar-container {
-            width: 130px;
-            height: 130px;
-            margin: 0 auto 15px;
-            position: relative;
-        }
-
-        .avatar {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            border: 4px solid var(--primary-gold);
-            object-fit: cover;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-            background-color: #ddd;
-        }
-
-        .header-section h1 {
-            color: var(--primary-blue);
-            font-size: 1.8rem;
-            margin: 5px 0;
-            font-weight: 700;
-        }
-
-        .header-section p {
-            color: var(--text-light);
-            font-size: 0.95rem;
-            margin: 0;
-            letter-spacing: 1px;
-        }
-
-        /* 2. 功能儀表板 (天氣 & 匯率) */
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-
-        .info-card {
-            background: var(--card-bg);
-            padding: 20px 15px;
-            border-radius: 16px;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-            border: 1px solid rgba(0,0,0,0.02);
-            transition: transform 0.2s;
-        }
-
-        .info-card:hover {
-            transform: translateY(-2px);
-        }
-
-        .info-card h3 {
-            margin: 0 0 12px 0;
-            font-size: 0.9rem;
-            color: var(--text-light);
-            font-weight: 500;
-        }
-
-        /* 天氣樣式 */
-        .weather-box {
-            display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
-        .weather-icon {
-            font-size: 2.2rem;
-            color: var(--primary-gold);
-            margin-bottom: 5px;
-        }
-        .weather-temp {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: var(--primary-blue);
+
+        .weather-box {
+            font-size: 0.9rem;
         }
         
-        /* 匯率樣式 */
-        .currency-input {
-            width: 80%;
-            padding: 8px;
-            border: 1px solid #eee;
-            border-radius: 8px;
-            text-align: center;
-            font-size: 1rem;
-            background: #fafafa;
-            outline: none;
-        }
-        .currency-input:focus {
-            border-color: var(--primary-gold);
-        }
-        .currency-result {
-            margin-top: 8px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--primary-blue);
+        .weather-box h3 {
+            margin: 0;
+            color: var(--primary-color);
         }
 
-        /* 3. 行程列表 (手風琴效果) */
-        .itinerary-title {
+        .weather-info {
             display: flex;
             align-items: center;
-            margin-bottom: 20px;
-            color: var(--primary-blue);
-        }
-        .itinerary-title i {
-            margin-right: 12px;
-            color: var(--primary-gold);
+            gap: 10px;
+            font-size: 1.2rem;
+            font-weight: bold;
         }
 
-        .accordion-item {
-            background: var(--card-bg);
-            margin-bottom: 12px;
-            border-radius: 12px;
+        .avatar-box {
+            text-align: center;
+        }
+
+        /* 這裡用CSS繪製一個簡單的圓形頭像框，你可以替換成 <img> 標籤 */
+        .avatar {
+            width: 60px;
+            height: 60px;
+            background-color: #ddd;
+            border-radius: 50%;
+            background-image: url('https://placehold.co/100x100/orange/white?text=User'); /* 預設圖片 */
+            background-size: cover;
+            border: 3px solid var(--primary-color);
+        }
+
+        /* 主要內容區 */
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+
+        h1.main-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+        }
+
+        /* 行程卡片 (Accordion) */
+        .day-card {
+            background: #fff;
+            margin-bottom: 15px;
+            border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
 
-        .accordion-header {
-            padding: 18px 20px;
-            cursor:
+        .day-header {
+            background-color: #fff;
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 5px solid var(--primary-color);
+            transition: background-color 0.3s;
+        }
+
+        .day-header:hover {
+            background-color: #f9f9f9;
+        }
+
+        .day-header h2 {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+        .toggle-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+        }
+
+        /* 內容區域 - 預設隱藏 */
+        .day-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+            padding: 0 20px;
+            background-color: #fafafa;
+        }
+
+        /* 展開時的樣式 */
+        .day-card.active .day-content {
+            /* 這裡透過 JS 動態計算高度 */
+            padding-bottom: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .day-card.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        /* 行程清單樣式 */
+        ul.timeline {
+            list-style-type: none;
+            padding-left: 10px;
+        }
+
+        ul.timeline li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 15px;
+            border-left: 2px solid #ddd;
+        }
+
+        ul.timeline li::before {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            background: var(--primary-color);
+            border-radius: 50%;
+        }
+
+        .time {
+            font-weight: bold;
+            color: #666;
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #888;
+            font-size: 0.8rem;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="weather-box">
+            <h3>台南天氣</h3>
+            <div class="weather-info" id="weather-display">
+                載入中...
+            </div>
+        </div>
+        <div class="avatar-box">
+            <div class="avatar" style="background-image: url('https://placehold.co/100x100/orange/white?text=ME');"></div>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1 class="main-title">台南慢活三日遊</h1>
+
+        <div class="day-card active"> <div class="day-header">
+                <h2>Day 1：府城經典與巷弄</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="day-content">
+                <ul class="timeline">
+                    <li><span class="time">11:00</span> 抵達台南，前往國華街吃午餐（富盛號、金得春捲）</li>
+                    <li><span class="time">14:00</span> 台南美術館二館拍照，感受光影之美</li>
+                    <li><span class="time">16:30</span> 林百貨逛文創，頂樓神社看夕陽</li>
+                    <li><span class="time">18:30</span> 晚餐：阿明豬心冬粉 (保安路)</li>
+                    <li><span class="time">20:00</span> 神農街老屋漫步，喝杯小酒</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="day-card">
+            <div class="day-header">
+                <h2>Day 2：安平古堡與濱海</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="day-content">
+                <ul class="timeline">
+                    <li><span class="time">09:30</span> 四草綠色隧道 (記得先預約或早點排隊)</li>
+                    <li><span class="time">12:00</span> 午餐：文章牛肉湯 或 周氏蝦捲</li>
+                    <li><span class="time">14:00</span> 安平樹屋 & 德記洋行</li>
+                    <li><span class="time">16:00</span> 大魚的祝福 (港濱歷史公園)</li>
+                    <li><span class="time">19:00</span> 花園夜市吃透透 (若非營業日改大東夜市)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="day-card">
+            <div class="day-header">
+                <h2>Day 3：藝文與奇美</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="day-content">
+                <ul class="timeline">
+                    <li><span class="time">10:00</span> 奇美博物館 (戶外野餐或參觀常設展)</li>
+                    <li><span class="time">13:00</span> 午餐：園區內或附近簡餐</li>
+                    <li><span class="time">14:30</span> 十鼓仁糖文創園區 (極限溜滑梯)</li>
+                    <li><span class="time">17:00</span> 購買伴手禮 (伊蕾特、連得堂)</li>
+                    <li><span class="time">18:00</span> 快樂賦歸</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>祝旅途愉快！ Enjoy Tainan.</p>
+    </footer>
+
+    <script>
+        // --- JavaScript 功能區 ---
+
+        // 1. 動態開合功能 (Accordion)
+        document.querySelectorAll('.day-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const card = header.parentElement;
+                const content = card.querySelector('.day-content');
+                
+                // 切換 active class
+                card.classList.toggle('active');
+
+                // 動態設定高度以產生滑動動畫
+                if (card.classList.contains('active')) {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                } else {
+                    content.style.maxHeight = "0";
+                }
+            });
+        });
+
+        // 初始化：讓預設打開的那一個 (active) 設定正確的高度
+        document.querySelectorAll('.day-card.active .day-content').forEach(content => {
+            content.style.maxHeight = content.scrollHeight + "px";
+        });
+
+
+        // 2. 模擬天氣功能
+        // 注意：真實天氣需要串接中央氣象局 API (需要 API Key)。
+        // 為了讓你直接能用，這裡寫一個簡單的模擬邏輯。
+        function updateWeather() {
+            const weatherDisplay = document.getElementById('weather-display');
+            
+            // 隨機顯示晴天或多雲 (模擬用)
+            // 實際使用建議申請 OpenWeatherMap API 或 CWB API
+            const weathers = [
+                { icon: '☀️', text: '晴朗 28°C' },
+                { icon: '🌤️', text: '多雲 26°C' },
+                { icon: '☁️', text: '陰天 25°C' }
+            ];
+            
+            // 這裡假裝隨機取一個狀態，實際上你可以手動改成當天預報
+            const todayWeather = weathers[0]; 
+            
+            weatherDisplay.innerHTML = `${todayWeather.icon} ${todayWeather.text}`;
+        }
+
+        // 執行天氣更新
+        updateWeather();
+
+    </script>
+</body>
+</html>
