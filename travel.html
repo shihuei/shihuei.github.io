@@ -9,7 +9,6 @@
     
     <style>
         :root {
-            /* 配色方案：尼羅河深藍、沙漠金、紙莎草白 */
             --primary-gold: #D4AF37; 
             --primary-blue: #0F1F38;
             --bg-color: #F5F5F0;
@@ -28,7 +27,6 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* 容器設定 */
         .container {
             max-width: 600px;
             margin: 0 auto;
@@ -38,12 +36,11 @@
             flex-direction: column;
         }
 
-        /* 1. 頭像與標題區塊 */
+        /* 1. 頭像與標題 */
         .header-section {
             text-align: center;
             margin-bottom: 30px;
             padding-top: 20px;
-            position: relative;
         }
 
         .avatar-container {
@@ -73,11 +70,10 @@
         .header-section p {
             color: var(--text-light);
             font-size: 0.95rem;
-            margin: 0;
             letter-spacing: 1px;
         }
 
-        /* 2. 功能儀表板 (天氣 & 匯率) */
+        /* 2. 儀表板 */
         .dashboard-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -92,21 +88,8 @@
             text-align: center;
             box-shadow: 0 4px 12px rgba(0,0,0,0.03);
             border: 1px solid rgba(0,0,0,0.02);
-            transition: transform 0.2s;
         }
 
-        .info-card:hover {
-            transform: translateY(-2px);
-        }
-
-        .info-card h3 {
-            margin: 0 0 12px 0;
-            font-size: 0.9rem;
-            color: var(--text-light);
-            font-weight: 500;
-        }
-
-        /* 天氣樣式 */
         .weather-box {
             display: flex;
             flex-direction: column;
@@ -123,7 +106,6 @@
             color: var(--primary-blue);
         }
         
-        /* 匯率樣式 */
         .currency-input {
             width: 80%;
             padding: 8px;
@@ -144,7 +126,7 @@
             color: var(--primary-blue);
         }
 
-        /* 3. 行程列表 (手風琴效果) */
+        /* 3. 行程列表 */
         .itinerary-title {
             display: flex;
             align-items: center;
@@ -179,7 +161,6 @@
             background-color: #fcfcfc;
         }
 
-        /* 激活狀態 */
         .accordion-item.active .accordion-header {
             border-left: 4px solid var(--primary-gold);
             background-color: #f8f9fa;
@@ -226,7 +207,6 @@
             border-top: 1px solid #f0f0f0;
         }
 
-        /* 行程細節列表樣式 */
         .details-list {
             list-style: none;
             padding: 0;
@@ -235,7 +215,7 @@
         .details-list li {
             position: relative;
             padding-left: 20px;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             color: #555;
             font-size: 0.95rem;
         }
@@ -248,7 +228,27 @@
             top: 0;
         }
 
-        /* 頁尾 */
+        /* 連結樣式特別設計 */
+        .map-link {
+            color: #b08d2b; /* 深金色 */
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 1px dotted #b08d2b;
+            transition: color 0.2s;
+        }
+        .map-link:hover {
+            color: var(--primary-blue);
+            border-bottom: 1px solid var(--primary-blue);
+        }
+        .map-link::after {
+            content: "\f3c5"; /* FontAwesome map-marker */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            font-size: 0.8em;
+            margin-left: 4px;
+            color: var(--primary-gold);
+        }
+
         footer {
             margin-top: auto;
             text-align: center;
@@ -256,7 +256,6 @@
             color: #999;
             font-size: 0.8rem;
         }
-
     </style>
 </head>
 <body>
@@ -265,10 +264,10 @@
         
         <div class="header-section">
             <div class="avatar-container">
-                <img src="img/family.png" alt="User Avatar" class="avatar">
+                <img src="img\family.png" alt="User Avatar" class="avatar">
             </div>
             <h1>埃及古文明之旅</h1>
-            <p>13 天 11 夜 • 夢幻行程表</p>
+            <p>13 天 11 夜 • 點擊景點開啟地圖</p>
         </div>
 
         <div class="dashboard-grid">
@@ -284,9 +283,9 @@
                 <h3>匯率試算 (EGP)</h3>
                 <input type="number" id="egp" class="currency-input" placeholder="輸入埃鎊" oninput="convertCurrency()">
                 <div class="currency-result">
-                    <span style="font-size:0.8rem; color:#999; font-weight:400;">≈</span> 
+                    <span style="font-size:0.8rem; color:#999;">≈</span> 
                     <span id="twd">0</span> 
-                    <span style="font-size:0.9rem;">TWD</span>
+                    TWD
                 </div>
             </div>
         </div>
@@ -296,50 +295,47 @@
             <h2 style="margin:0; font-size: 1.25rem;">每日行程總覽</h2>
         </div>
 
-        <div id="itinerary-list">
-            </div>
+        <div id="itinerary-list"></div>
 
         <footer>
-            <p>Have a nice trip to Egypt!</p>
+            <p>Have a wonderful trip!</p>
         </footer>
 
     </div>
 
     <script>
-        // --- 資料設定區 ---
-
-        // 匯率設定 (1 EGP 約等於 0.65 TWD，可依實際調整)
+        // 匯率
         const RATE = 0.65;
 
-        // 您的行程資料
+        // 行程資料 (已嵌入 Google Map 連結)
         const schedule = [
             {
                 day: "Day 1",
                 title: "抵達埃及 - 初見開羅",
                 content: [
-                    "抵達開羅",
-                    "入住開羅酒店",
-                    "金字塔附近散步、欣賞夕陽",
+                    "抵達 <a href='https://www.google.com/maps/search/?api=1&query=Cairo+International+Airport' class='map-link' target='_blank'>開羅國際機場</a>",
+                    "入住 <a href='https://www.google.com/maps/search/?api=1&query=Cairo+Hotel' class='map-link' target='_blank'>開羅市區酒店</a>",
+                    "於 <a href='https://www.google.com/maps/search/?api=1&query=Giza+Necropolis' class='map-link' target='_blank'>金字塔區</a> 附近散步、欣賞夕陽",
                     "餐廳享用晚餐"
                 ]
             },
             {
                 day: "Day 2",
-                title: "埃及古文明探訪 - 飛往亞斯文",
+                title: "吉薩金字塔 - 飛往亞斯文",
                 content: [
-                    "參觀吉薩金字塔群",
-                    "朝聖人面獅身像",
-                    "參觀新埃及博物館",
-                    "體驗騎駱駝",
-                    "晚上搭機飛往阿斯旺 (Aswan)"
+                    "參觀 <a href='https://www.google.com/maps/search/?api=1&query=Giza+Necropolis' class='map-link' target='_blank'>吉薩金字塔群</a>",
+                    "朝聖 <a href='https://www.google.com/maps/search/?api=1&query=Great+Sphinx+of+Giza' class='map-link' target='_blank'>人面獅身像</a>",
+                    "參觀 <a href='https://www.google.com/maps/search/?api=1&query=Grand+Egyptian+Museum' class='map-link' target='_blank'>新埃及博物館 (GEM)</a>",
+                    "金字塔區體驗騎駱駝",
+                    "晚上搭機飛往 <a href='https://www.google.com/maps/search/?api=1&query=Aswan+International+Airport' class='map-link' target='_blank'>亞斯文機場</a>"
                 ]
             },
             {
                 day: "Day 3",
                 title: "夜訪阿布辛貝",
                 content: [
-                    "前往阿布辛貝 (Abu Simbel)",
-                    "參觀阿布辛貝神殿",
+                    "前往 <a href='https://www.google.com/maps/search/?api=1&query=Abu+Simbel' class='map-link' target='_blank'>阿布辛貝</a>",
+                    "參觀 <a href='https://www.google.com/maps/search/?api=1&query=Abu+Simbel+Temples' class='map-link' target='_blank'>阿布辛貝神殿</a>",
                     "晚間欣賞神殿光影秀"
                 ]
             },
@@ -347,55 +343,55 @@
                 day: "Day 4",
                 title: "努比亞風情 - 入住郵輪",
                 content: [
-                    "享受一早還沒有觀光客的阿布辛貝",
-                    "阿布辛貝 → 返回阿斯旺",
-                    "前往努比亞村體驗風帆船",
+                    "享受一早無人的 <a href='https://www.google.com/maps/search/?api=1&query=Abu+Simbel+Temples' class='map-link' target='_blank'>阿布辛貝神殿</a>",
+                    "返回 <a href='https://www.google.com/maps/search/?api=1&query=Aswan' class='map-link' target='_blank'>亞斯文 (Aswan)</a>",
+                    "前往 <a href='https://www.google.com/maps/search/?api=1&query=Nubian+Village+Aswan' class='map-link' target='_blank'>努比亞村</a> 體驗風帆船",
                     "今晚入住尼羅河河輪"
                 ]
             },
             {
                 day: "Day 5",
-                title: "雙神廟巡禮",
+                title: "菲萊與康翁波",
                 content: [
-                    "參觀菲萊神廟 (Philae Temple)",
-                    "遊輪航行",
-                    "參觀康翁波神廟 (Kom Ombo Temple)"
+                    "參觀 <a href='https://www.google.com/maps/search/?api=1&query=Philae+Temple+Complex' class='map-link' target='_blank'>菲萊神廟</a>",
+                    "遊輪航行於尼羅河",
+                    "參觀 <a href='https://www.google.com/maps/search/?api=1&query=Temple+of+Kom+Ombo' class='map-link' target='_blank'>康翁波神廟 (雙神殿)</a>"
                 ]
             },
             {
                 day: "Day 6",
                 title: "艾德福與盧克索",
                 content: [
-                    "參觀艾德福神殿 (Edfu Temple)",
-                    "抵達盧克索",
-                    "參觀盧克索神殿 (Luxor Temple)"
+                    "參觀 <a href='https://www.google.com/maps/search/?api=1&query=Edfu+Temple' class='map-link' target='_blank'>艾德福神殿 (荷魯斯)</a>",
+                    "抵達 <a href='https://www.google.com/maps/search/?api=1&query=Luxor' class='map-link' target='_blank'>盧克索 (Luxor)</a>",
+                    "參觀 <a href='https://www.google.com/maps/search/?api=1&query=Luxor+Temple' class='map-link' target='_blank'>盧克索神殿</a>"
                 ]
             },
             {
                 day: "Day 7",
-                title: "帝王谷與卡納克 - 前往紅海",
+                title: "帝王谷與卡納克",
                 content: [
-                    "參觀帝王谷 (Valley of the Kings)",
-                    "參觀卡納克神殿 (Karnak Temple)",
-                    "前往赫爾達格 (Hurghada)",
+                    "探索 <a href='https://www.google.com/maps/search/?api=1&query=Valley+of+the+Kings' class='map-link' target='_blank'>帝王谷</a>",
+                    "參觀 <a href='https://www.google.com/maps/search/?api=1&query=Karnak+Temple' class='map-link' target='_blank'>卡納克神殿</a>",
+                    "前往 <a href='https://www.google.com/maps/search/?api=1&query=Hurghada' class='map-link' target='_blank'>赫爾達格 (Hurghada)</a>",
                     "入住紅海度假飯店"
                 ]
             },
             {
                 day: "Day 8",
-                title: "赫爾達格 - 紅海悠閒",
+                title: "赫爾達格自由活動",
                 content: [
                     "全日自由活動",
-                    "紅海浮潛體驗",
+                    "於 <a href='https://www.google.com/maps/search/?api=1&query=Red+Sea+Hurghada' class='map-link' target='_blank'>紅海</a> 浮潛體驗",
                     "享受飯店設施"
                 ]
             },
             {
                 day: "Day 9",
-                title: "紅海時光 - 返回開羅",
+                title: "紅海 - 返回開羅",
                 content: [
-                    "享受水上活動",
-                    "傍晚搭機飛回開羅",
+                    "享受紅海水上活動",
+                    "傍晚搭機前往 <a href='https://www.google.com/maps/search/?api=1&query=Cairo' class='map-link' target='_blank'>開羅</a>",
                     "入住開羅飯店"
                 ]
             },
@@ -403,17 +399,17 @@
                 day: "Day 10",
                 title: "黑白沙漠探險",
                 content: [
-                    "一早搭車前往黑白沙漠",
+                    "一早搭車前往 <a href='https://www.google.com/maps/search/?api=1&query=Black+Desert+Egypt' class='map-link' target='_blank'>黑沙漠</a> 與 <a href='https://www.google.com/maps/search/?api=1&query=White+Desert+National+Park' class='map-link' target='_blank'>白沙漠</a>",
                     "探索沙漠奇景",
                     "晚上入住星空酒店 (或露營體驗)"
                 ]
             },
             {
                 day: "Day 11",
-                title: "開羅 - 金字塔景下午茶",
+                title: "開羅 - 金字塔下午茶",
                 content: [
                     "返回開羅市區",
-                    "Mena House 享用下午茶",
+                    "於 <a href='https://www.google.com/maps/search/?api=1&query=Marriott+Mena+House+Cairo' class='map-link' target='_blank'>Mena House</a> 享用下午茶",
                     "享受開羅最後時光"
                 ]
             },
@@ -422,27 +418,21 @@
                 title: "開心返家",
                 content: [
                     "整理行囊",
-                    "前往機場",
+                    "前往 <a href='https://www.google.com/maps/search/?api=1&query=Cairo+International+Airport' class='map-link' target='_blank'>開羅國際機場</a>",
                     "搭乘阿聯酋航空回到溫暖的家"
                 ]
             }
         ];
 
-        // --- 程式邏輯區 ---
-
+        // 程式邏輯
         const listContainer = document.getElementById('itinerary-list');
 
-        // 1. 產生行程列表 HTML
-        schedule.forEach((item, index) => {
-            // 建立清單項目 HTML
+        schedule.forEach((item) => {
+            // 直接使用包含 HTML 標籤的字串
             let listItems = item.content.map(text => `<li>${text}</li>`).join('');
 
             const div = document.createElement('div');
             div.className = 'accordion-item';
-            
-            // 預設展開第一天 (Optional)
-            // if(index === 0) div.className += ' active'; 
-
             div.innerHTML = `
                 <div class="accordion-header">
                     <div style="display:flex; align-items:center;">
@@ -460,20 +450,15 @@
                 </div>
             `;
 
-            // 加入點擊事件
             const header = div.querySelector('.accordion-header');
             header.addEventListener('click', () => {
-                // 關閉其他已展開的項目 (若想要手風琴一次只開一個，保留此段)
                 const currentActive = document.querySelector('.accordion-item.active');
                 if(currentActive && currentActive !== div) {
                     currentActive.classList.remove('active');
                     currentActive.querySelector('.accordion-content').style.maxHeight = null;
                 }
-
-                // 切換當前項目
                 div.classList.toggle('active');
                 const content = div.querySelector('.accordion-content');
-                
                 if (div.classList.contains('active')) {
                     content.style.maxHeight = content.scrollHeight + "px";
                 } else {
@@ -484,20 +469,15 @@
             listContainer.appendChild(div);
         });
 
-        // 2. 匯率計算功能
         function convertCurrency() {
             const input = document.getElementById('egp').value;
             const output = document.getElementById('twd');
             if(input) {
-                output.innerText = (input * RATE).toFixed(0); // 取整數
+                output.innerText = (input * RATE).toFixed(0);
             } else {
                 output.innerText = '0';
             }
         }
-
-        // 3. (選用) 如果想要第一天預設展開，可以執行這行：
-        // document.querySelector('.accordion-header').click();
-
     </script>
 </body>
 </html>
