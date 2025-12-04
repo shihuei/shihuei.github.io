@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>埃及 13 天 11 夜專屬旅程</title>
+    <title>埃及 13 天 11 夜：行程與記帳</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
@@ -15,6 +15,7 @@
             --card-bg: #FFFFFF;
             --text-main: #333333;
             --text-light: #666666;
+            --accent-green: #28a745; /* 用於金錢 */
         }
 
         body {
@@ -24,7 +25,6 @@
             margin: 0;
             padding: 0;
             line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
         }
 
         .container {
@@ -67,12 +67,6 @@
             font-weight: 700;
         }
 
-        .header-section p {
-            color: var(--text-light);
-            font-size: 0.95rem;
-            letter-spacing: 1px;
-        }
-
         /* 2. 儀表板 */
         .dashboard-grid {
             display: grid;
@@ -90,20 +84,10 @@
             border: 1px solid rgba(0,0,0,0.02);
         }
 
-        .weather-box {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
         .weather-icon {
             font-size: 2.2rem;
             color: var(--primary-gold);
             margin-bottom: 5px;
-        }
-        .weather-temp {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: var(--primary-blue);
         }
         
         .currency-input {
@@ -115,9 +99,6 @@
             font-size: 1rem;
             background: #fafafa;
             outline: none;
-        }
-        .currency-input:focus {
-            border-color: var(--primary-gold);
         }
         .currency-result {
             margin-top: 8px;
@@ -133,10 +114,7 @@
             margin-bottom: 20px;
             color: var(--primary-blue);
         }
-        .itinerary-title i {
-            margin-right: 12px;
-            color: var(--primary-gold);
-        }
+        .itinerary-title i { margin-right: 12px; color: var(--primary-gold); }
 
         .accordion-item {
             background: var(--card-bg);
@@ -157,10 +135,6 @@
             border-left: 4px solid transparent;
         }
 
-        .accordion-header:hover {
-            background-color: #fcfcfc;
-        }
-
         .accordion-item.active .accordion-header {
             border-left: 4px solid var(--primary-gold);
             background-color: #f8f9fa;
@@ -178,22 +152,9 @@
             text-align: center;
         }
 
-        .trip-title {
-            font-weight: 600;
-            color: var(--text-main);
-            font-size: 1rem;
-            flex: 1;
-        }
-
-        .accordion-icon {
-            color: #ccc;
-            transition: transform 0.3s ease;
-        }
-        
-        .accordion-item.active .accordion-icon {
-            transform: rotate(180deg);
-            color: var(--primary-gold);
-        }
+        .trip-title { font-weight: 600; color: var(--text-main); font-size: 1rem; flex: 1; }
+        .accordion-icon { color: #ccc; transition: transform 0.3s ease; }
+        .accordion-item.active .accordion-icon { transform: rotate(180deg); color: var(--primary-gold); }
 
         .accordion-content {
             max-height: 0;
@@ -202,16 +163,9 @@
             background-color: #fff;
         }
 
-        .content-inner {
-            padding: 20px 25px;
-            border-top: 1px solid #f0f0f0;
-        }
+        .content-inner { padding: 20px 25px; border-top: 1px solid #f0f0f0; }
 
-        .details-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
+        .details-list { list-style: none; padding: 0; margin: 0 0 20px 0; }
         .details-list li {
             position: relative;
             padding-left: 20px;
@@ -228,26 +182,90 @@
             top: 0;
         }
 
-        /* 連結樣式特別設計 */
         .map-link {
-            color: #b08d2b; /* 深金色 */
+            color: #b08d2b;
             text-decoration: none;
             font-weight: 600;
             border-bottom: 1px dotted #b08d2b;
-            transition: color 0.2s;
         }
-        .map-link:hover {
-            color: var(--primary-blue);
-            border-bottom: 1px solid var(--primary-blue);
-        }
+        .map-link:hover { color: var(--primary-blue); }
         .map-link::after {
-            content: "\f3c5"; /* FontAwesome map-marker */
-            font-family: "Font Awesome 6 Free";
-            font-weight: 900;
-            font-size: 0.8em;
-            margin-left: 4px;
-            color: var(--primary-gold);
+            content: "\f3c5"; font-family: "Font Awesome 6 Free"; font-weight: 900;
+            font-size: 0.8em; margin-left: 4px; color: var(--primary-gold);
         }
+
+        /* --- 記帳區塊樣式 --- */
+        .spending-section {
+            background-color: #fcfcfc;
+            border: 1px dashed #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        
+        .spending-header {
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .input-item { flex: 2; padding: 8px; border: 1px solid #ddd; border-radius: 5px; }
+        .input-amount { flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 5px; }
+        
+        .btn-add {
+            background-color: var(--primary-gold);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .expense-list {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0 0 0;
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        .expense-item {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #eee;
+            padding: 5px 0;
+        }
+
+        .expense-delete {
+            color: #ff4d4d;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        /* --- 總結區塊 --- */
+        .total-summary {
+            background: linear-gradient(135deg, var(--primary-blue), #1a2d4d);
+            color: white;
+            padding: 25px;
+            border-radius: 16px;
+            margin-top: 30px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(15, 31, 56, 0.2);
+        }
+
+        .total-title { font-size: 1.1rem; margin-bottom: 10px; opacity: 0.9; }
+        .total-amount-egp { font-size: 2.5rem; font-weight: bold; color: var(--primary-gold); line-height: 1; margin-bottom: 5px; }
+        .total-amount-twd { font-size: 1rem; opacity: 0.7; }
 
         footer {
             margin-top: auto;
@@ -264,177 +282,84 @@
         
         <div class="header-section">
             <div class="avatar-container">
-                <img src="img\family.png" alt="User Avatar" class="avatar">
+                <img src="img\family.png" alt="YU Family" class="avatar">
             </div>
             <h1>埃及古文明之旅</h1>
-            <p>13 天 11 夜 • 點擊景點開啟地圖</p>
+            <p>13 天 11 夜 • 行程與記帳</p>
         </div>
 
         <div class="dashboard-grid">
             <div class="info-card">
                 <h3>開羅天氣</h3>
-                <div class="weather-box">
+                <div style="display: flex; flex-direction: column; align-items: center;">
                     <i class="fas fa-sun weather-icon"></i>
-                    <span class="weather-temp">26°C</span>
-                    <span style="font-size:0.8rem; color:#888;">晴時多雲</span>
+                    <span style="font-size: 1.6rem; font-weight: 700; color: var(--primary-blue);">26°C</span>
                 </div>
             </div>
             <div class="info-card">
                 <h3>匯率試算 (EGP)</h3>
-                <input type="number" id="egp" class="currency-input" placeholder="輸入埃鎊" oninput="convertCurrency()">
+                <input type="number" id="egp" class="currency-input" placeholder="埃鎊" oninput="convertCurrency()">
                 <div class="currency-result">
                     <span style="font-size:0.8rem; color:#999;">≈</span> 
-                    <span id="twd">0</span> 
-                    TWD
+                    <span id="twd">0</span> TWD
                 </div>
             </div>
         </div>
 
         <div class="itinerary-title">
             <i class="fas fa-map-marked-alt fa-lg"></i>
-            <h2 style="margin:0; font-size: 1.25rem;">每日行程總覽</h2>
+            <h2 style="margin:0; font-size: 1.25rem;">每日行程 & 記帳</h2>
         </div>
 
         <div id="itinerary-list"></div>
 
+        <div class="total-summary">
+            <div class="total-title">這趟旅程總消費</div>
+            <div class="total-amount-egp"><span id="grand-total-egp">0</span> <span style="font-size:1rem">EGP</span></div>
+            <div class="total-amount-twd">約合 NT$ <span id="grand-total-twd">0</span></div>
+            <div style="font-size: 0.7rem; margin-top: 10px; opacity: 0.6;">*資料已自動儲存於此手機</div>
+        </div>
+
         <footer>
-            <p>Have a wonderful trip!</p>
+            <p>Enjoy Egypt!</p>
         </footer>
 
     </div>
 
     <script>
-        // 匯率
+        // 設定
         const RATE = 0.65;
+        const STORAGE_KEY = 'egypt_trip_expenses';
 
-        // 行程資料 (已嵌入 Google Map 連結)
+        // 行程資料
         const schedule = [
-            {
-                day: "Day 1",
-                title: "抵達埃及 - 初見開羅",
-                content: [
-                    "抵達 <a href='https://www.google.com/maps/search/?api=1&query=Cairo+International+Airport' class='map-link' target='_blank'>開羅國際機場</a>",
-                    "入住 <a href='https://www.google.com/maps/search/?api=1&query=Cairo+Hotel' class='map-link' target='_blank'>開羅市區酒店</a>",
-                    "於 <a href='https://www.google.com/maps/search/?api=1&query=Giza+Necropolis' class='map-link' target='_blank'>金字塔區</a> 附近散步、欣賞夕陽",
-                    "餐廳享用晚餐"
-                ]
-            },
-            {
-                day: "Day 2",
-                title: "吉薩金字塔 - 飛往亞斯文",
-                content: [
-                    "參觀 <a href='https://www.google.com/maps/search/?api=1&query=Giza+Necropolis' class='map-link' target='_blank'>吉薩金字塔群</a>",
-                    "朝聖 <a href='https://www.google.com/maps/search/?api=1&query=Great+Sphinx+of+Giza' class='map-link' target='_blank'>人面獅身像</a>",
-                    "參觀 <a href='https://www.google.com/maps/search/?api=1&query=Grand+Egyptian+Museum' class='map-link' target='_blank'>新埃及博物館 (GEM)</a>",
-                    "金字塔區體驗騎駱駝",
-                    "晚上搭機飛往 <a href='https://www.google.com/maps/search/?api=1&query=Aswan+International+Airport' class='map-link' target='_blank'>亞斯文機場</a>"
-                ]
-            },
-            {
-                day: "Day 3",
-                title: "夜訪阿布辛貝",
-                content: [
-                    "前往 <a href='https://www.google.com/maps/search/?api=1&query=Abu+Simbel' class='map-link' target='_blank'>阿布辛貝</a>",
-                    "參觀 <a href='https://www.google.com/maps/search/?api=1&query=Abu+Simbel+Temples' class='map-link' target='_blank'>阿布辛貝神殿</a>",
-                    "晚間欣賞神殿光影秀"
-                ]
-            },
-            {
-                day: "Day 4",
-                title: "努比亞風情 - 入住郵輪",
-                content: [
-                    "享受一早無人的 <a href='https://www.google.com/maps/search/?api=1&query=Abu+Simbel+Temples' class='map-link' target='_blank'>阿布辛貝神殿</a>",
-                    "返回 <a href='https://www.google.com/maps/search/?api=1&query=Aswan' class='map-link' target='_blank'>亞斯文 (Aswan)</a>",
-                    "前往 <a href='https://www.google.com/maps/search/?api=1&query=Nubian+Village+Aswan' class='map-link' target='_blank'>努比亞村</a> 體驗風帆船",
-                    "今晚入住尼羅河河輪"
-                ]
-            },
-            {
-                day: "Day 5",
-                title: "菲萊與康翁波",
-                content: [
-                    "參觀 <a href='https://www.google.com/maps/search/?api=1&query=Philae+Temple+Complex' class='map-link' target='_blank'>菲萊神廟</a>",
-                    "遊輪航行於尼羅河",
-                    "參觀 <a href='https://www.google.com/maps/search/?api=1&query=Temple+of+Kom+Ombo' class='map-link' target='_blank'>康翁波神廟 (雙神殿)</a>"
-                ]
-            },
-            {
-                day: "Day 6",
-                title: "艾德福與盧克索",
-                content: [
-                    "參觀 <a href='https://www.google.com/maps/search/?api=1&query=Edfu+Temple' class='map-link' target='_blank'>艾德福神殿 (荷魯斯)</a>",
-                    "抵達 <a href='https://www.google.com/maps/search/?api=1&query=Luxor' class='map-link' target='_blank'>盧克索 (Luxor)</a>",
-                    "參觀 <a href='https://www.google.com/maps/search/?api=1&query=Luxor+Temple' class='map-link' target='_blank'>盧克索神殿</a>"
-                ]
-            },
-            {
-                day: "Day 7",
-                title: "帝王谷與卡納克",
-                content: [
-                    "探索 <a href='https://www.google.com/maps/search/?api=1&query=Valley+of+the+Kings' class='map-link' target='_blank'>帝王谷</a>",
-                    "參觀 <a href='https://www.google.com/maps/search/?api=1&query=Karnak+Temple' class='map-link' target='_blank'>卡納克神殿</a>",
-                    "前往 <a href='https://www.google.com/maps/search/?api=1&query=Hurghada' class='map-link' target='_blank'>赫爾達格 (Hurghada)</a>",
-                    "入住紅海度假飯店"
-                ]
-            },
-            {
-                day: "Day 8",
-                title: "赫爾達格自由活動",
-                content: [
-                    "全日自由活動",
-                    "於 <a href='https://www.google.com/maps/search/?api=1&query=Red+Sea+Hurghada' class='map-link' target='_blank'>紅海</a> 浮潛體驗",
-                    "享受飯店設施"
-                ]
-            },
-            {
-                day: "Day 9",
-                title: "紅海 - 返回開羅",
-                content: [
-                    "享受紅海水上活動",
-                    "傍晚搭機前往 <a href='https://www.google.com/maps/search/?api=1&query=Cairo' class='map-link' target='_blank'>開羅</a>",
-                    "入住開羅飯店"
-                ]
-            },
-            {
-                day: "Day 10",
-                title: "黑白沙漠探險",
-                content: [
-                    "一早搭車前往 <a href='https://www.google.com/maps/search/?api=1&query=Black+Desert+Egypt' class='map-link' target='_blank'>黑沙漠</a> 與 <a href='https://www.google.com/maps/search/?api=1&query=White+Desert+National+Park' class='map-link' target='_blank'>白沙漠</a>",
-                    "探索沙漠奇景",
-                    "晚上入住星空酒店 (或露營體驗)"
-                ]
-            },
-            {
-                day: "Day 11",
-                title: "開羅 - 金字塔下午茶",
-                content: [
-                    "返回開羅市區",
-                    "於 <a href='https://www.google.com/maps/search/?api=1&query=Marriott+Mena+House+Cairo' class='map-link' target='_blank'>Mena House</a> 享用下午茶",
-                    "享受開羅最後時光"
-                ]
-            },
-            {
-                day: "Day 12",
-                title: "開心返家",
-                content: [
-                    "整理行囊",
-                    "前往 <a href='https://www.google.com/maps/search/?api=1&query=Cairo+International+Airport' class='map-link' target='_blank'>開羅國際機場</a>",
-                    "搭乘阿聯酋航空回到溫暖的家"
-                ]
-            }
+            { day: "Day 1", title: "抵達埃及 - 初見開羅", content: ["抵達 <a href='https://www.google.com/maps/search/?api=1&query=Cairo+International+Airport' class='map-link' target='_blank'>開羅國際機場</a>", "入住 <a href='https://www.google.com/maps/search/?api=1&query=Cairo+Hotel' class='map-link' target='_blank'>開羅市區酒店</a>", "於 <a href='https://www.google.com/maps/search/?api=1&query=Giza+Necropolis' class='map-link' target='_blank'>金字塔區</a> 附近散步、欣賞夕陽", "餐廳享用晚餐"] },
+            { day: "Day 2", title: "吉薩金字塔 - 飛往亞斯文", content: ["參觀 <a href='https://www.google.com/maps/search/?api=1&query=Giza+Necropolis' class='map-link' target='_blank'>吉薩金字塔群</a>", "朝聖 <a href='https://www.google.com/maps/search/?api=1&query=Great+Sphinx+of+Giza' class='map-link' target='_blank'>人面獅身像</a>", "參觀 <a href='https://www.google.com/maps/search/?api=1&query=Grand+Egyptian+Museum' class='map-link' target='_blank'>新埃及博物館 (GEM)</a>", "金字塔區體驗騎駱駝", "晚上搭機飛往 <a href='https://www.google.com/maps/search/?api=1&query=Aswan+International+Airport' class='map-link' target='_blank'>亞斯文機場</a>"] },
+            { day: "Day 3", title: "夜訪阿布辛貝", content: ["前往 <a href='https://www.google.com/maps/search/?api=1&query=Abu+Simbel' class='map-link' target='_blank'>阿布辛貝</a>", "參觀 <a href='https://www.google.com/maps/search/?api=1&query=Abu+Simbel+Temples' class='map-link' target='_blank'>阿布辛貝神殿</a>", "晚間欣賞神殿光影秀"] },
+            { day: "Day 4", title: "努比亞風情 - 入住郵輪", content: ["享受一早無人的 <a href='https://www.google.com/maps/search/?api=1&query=Abu+Simbel+Temples' class='map-link' target='_blank'>阿布辛貝神殿</a>", "返回 <a href='https://www.google.com/maps/search/?api=1&query=Aswan' class='map-link' target='_blank'>亞斯文 (Aswan)</a>", "前往 <a href='https://www.google.com/maps/search/?api=1&query=Nubian+Village+Aswan' class='map-link' target='_blank'>努比亞村</a> 體驗風帆船", "今晚入住尼羅河河輪"] },
+            { day: "Day 5", title: "菲萊與康翁波", content: ["參觀 <a href='https://www.google.com/maps/search/?api=1&query=Philae+Temple+Complex' class='map-link' target='_blank'>菲萊神廟</a>", "遊輪航行於尼羅河", "參觀 <a href='https://www.google.com/maps/search/?api=1&query=Temple+of+Kom+Ombo' class='map-link' target='_blank'>康翁波神廟 (雙神殿)</a>"] },
+            { day: "Day 6", title: "艾德福與盧克索", content: ["參觀 <a href='https://www.google.com/maps/search/?api=1&query=Edfu+Temple' class='map-link' target='_blank'>艾德福神殿 (荷魯斯)</a>", "抵達 <a href='https://www.google.com/maps/search/?api=1&query=Luxor' class='map-link' target='_blank'>盧克索 (Luxor)</a>", "參觀 <a href='https://www.google.com/maps/search/?api=1&query=Luxor+Temple' class='map-link' target='_blank'>盧克索神殿</a>"] },
+            { day: "Day 7", title: "帝王谷與卡納克", content: ["探索 <a href='https://www.google.com/maps/search/?api=1&query=Valley+of+the+Kings' class='map-link' target='_blank'>帝王谷</a>", "參觀 <a href='https://www.google.com/maps/search/?api=1&query=Karnak+Temple' class='map-link' target='_blank'>卡納克神殿</a>", "前往 <a href='https://www.google.com/maps/search/?api=1&query=Hurghada' class='map-link' target='_blank'>赫爾達格 (Hurghada)</a>", "入住紅海度假飯店"] },
+            { day: "Day 8", title: "赫爾達格自由活動", content: ["全日自由活動", "於 <a href='https://www.google.com/maps/search/?api=1&query=Red+Sea+Hurghada' class='map-link' target='_blank'>紅海</a> 浮潛體驗", "享受飯店設施"] },
+            { day: "Day 9", title: "紅海 - 返回開羅", content: ["享受紅海水上活動", "傍晚搭機前往 <a href='https://www.google.com/maps/search/?api=1&query=Cairo' class='map-link' target='_blank'>開羅</a>", "入住開羅飯店"] },
+            { day: "Day 10", title: "黑白沙漠探險", content: ["一早搭車前往 <a href='https://www.google.com/maps/search/?api=1&query=Black+Desert+Egypt' class='map-link' target='_blank'>黑沙漠</a> 與 <a href='https://www.google.com/maps/search/?api=1&query=White+Desert+National+Park' class='map-link' target='_blank'>白沙漠</a>", "探索沙漠奇景", "晚上入住星空酒店 (或露營體驗)"] },
+            { day: "Day 11", title: "開羅 - 金字塔下午茶", content: ["返回開羅市區", "於 <a href='https://www.google.com/maps/search/?api=1&query=Marriott+Mena+House+Cairo' class='map-link' target='_blank'>Mena House</a> 享用下午茶", "享受開羅最後時光"] },
+            { day: "Day 12", title: "開心返家", content: ["整理行囊", "前往 <a href='https://www.google.com/maps/search/?api=1&query=Cairo+International+Airport' class='map-link' target='_blank'>開羅國際機場</a>", "搭乘阿聯酋航空回到溫暖的家"] }
         ];
 
-        // 程式邏輯
+        // 讀取儲存的消費資料
+        let expenses = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+
         const listContainer = document.getElementById('itinerary-list');
 
-        schedule.forEach((item) => {
-            // 直接使用包含 HTML 標籤的字串
+        // 初始化行程列表
+        schedule.forEach((item, index) => {
             let listItems = item.content.map(text => `<li>${text}</li>`).join('');
 
             const div = document.createElement('div');
             div.className = 'accordion-item';
             div.innerHTML = `
-                <div class="accordion-header">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
                     <div style="display:flex; align-items:center;">
                         <span class="day-badge">${item.day}</span>
                         <span class="trip-title">${item.title}</span>
@@ -443,31 +368,141 @@
                 </div>
                 <div class="accordion-content">
                     <div class="content-inner">
-                        <ul class="details-list">
-                            ${listItems}
-                        </ul>
+                        <ul class="details-list">${listItems}</ul>
+                        
+                        <div class="spending-section">
+                            <div class="spending-header">
+                                <span><i class="fas fa-coins"></i> 消費紀錄</span>
+                                <span>合計: <span id="day-total-${index}">0</span> EGP</span>
+                            </div>
+                            <div class="input-group">
+                                <input type="text" class="input-item" id="item-name-${index}" placeholder="項目 (如:午餐)">
+                                <input type="number" class="input-amount" id="item-price-${index}" placeholder="金額">
+                                <button class="btn-add" onclick="addExpense(${index})">記</button>
+                            </div>
+                            <ul class="expense-list" id="expense-list-${index}">
+                                </ul>
+                        </div>
                     </div>
                 </div>
             `;
+            listContainer.appendChild(div);
+            
+            // 初始化該日的消費列表
+            renderDayExpenses(index);
+        });
 
-            const header = div.querySelector('.accordion-header');
-            header.addEventListener('click', () => {
-                const currentActive = document.querySelector('.accordion-item.active');
-                if(currentActive && currentActive !== div) {
-                    currentActive.classList.remove('active');
-                    currentActive.querySelector('.accordion-content').style.maxHeight = null;
-                }
-                div.classList.toggle('active');
-                const content = div.querySelector('.accordion-content');
-                if (div.classList.contains('active')) {
-                    content.style.maxHeight = content.scrollHeight + "px";
-                } else {
-                    content.style.maxHeight = null;
-                }
+        updateGrandTotal();
+
+        // --- 記帳功能邏輯 ---
+
+        function addExpense(dayIndex) {
+            const nameInput = document.getElementById(`item-name-${dayIndex}`);
+            const priceInput = document.getElementById(`item-price-${dayIndex}`);
+            const name = nameInput.value.trim();
+            const price = parseFloat(priceInput.value);
+
+            if (!name || isNaN(price)) {
+                alert("請輸入項目名稱和有效金額");
+                return;
+            }
+
+            // 初始化該天的陣列
+            if (!expenses[dayIndex]) expenses[dayIndex] = [];
+
+            // 新增資料
+            expenses[dayIndex].push({ name: name, price: price });
+            
+            // 儲存與更新
+            saveData();
+            renderDayExpenses(dayIndex);
+            updateGrandTotal();
+
+            // 清空輸入框
+            nameInput.value = '';
+            priceInput.value = '';
+        }
+
+        function deleteExpense(dayIndex, itemIndex) {
+            if (confirm("確定刪除這筆消費嗎？")) {
+                expenses[dayIndex].splice(itemIndex, 1);
+                saveData();
+                renderDayExpenses(dayIndex);
+                updateGrandTotal();
+            }
+        }
+
+        function renderDayExpenses(dayIndex) {
+            const listEl = document.getElementById(`expense-list-${dayIndex}`);
+            const totalEl = document.getElementById(`day-total-${dayIndex}`);
+            
+            if (!expenses[dayIndex]) {
+                listEl.innerHTML = '';
+                totalEl.innerText = '0';
+                return;
+            }
+
+            let html = '';
+            let dayTotal = 0;
+
+            expenses[dayIndex].forEach((item, idx) => {
+                dayTotal += item.price;
+                html += `
+                    <li class="expense-item">
+                        <span>${item.name}</span>
+                        <span>
+                            ${item.price} <small>EGP</small>
+                            <i class="fas fa-times expense-delete" onclick="deleteExpense(${dayIndex}, ${idx})"></i>
+                        </span>
+                    </li>
+                `;
             });
 
-            listContainer.appendChild(div);
-        });
+            listEl.innerHTML = html;
+            totalEl.innerText = dayTotal.toLocaleString();
+            
+            // 為了讓 Accordion 高度適應新增的內容，如果它是打開的
+            const contentDiv = listEl.closest('.accordion-content');
+            if (contentDiv.style.maxHeight) {
+                contentDiv.style.maxHeight = contentDiv.scrollHeight + "px";
+            }
+        }
+
+        function updateGrandTotal() {
+            let total = 0;
+            // 遍歷所有天數
+            Object.values(expenses).forEach(dayList => {
+                dayList.forEach(item => total += item.price);
+            });
+
+            document.getElementById('grand-total-egp').innerText = total.toLocaleString();
+            document.getElementById('grand-total-twd').innerText = (total * RATE).toLocaleString();
+        }
+
+        function saveData() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(expenses));
+        }
+
+        // --- 基礎互動邏輯 ---
+
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            const content = header.nextElementSibling;
+            
+            // 關閉其他
+            const currentActive = document.querySelector('.accordion-item.active');
+            if(currentActive && currentActive !== item) {
+                currentActive.classList.remove('active');
+                currentActive.querySelector('.accordion-content').style.maxHeight = null;
+            }
+
+            item.classList.toggle('active');
+            if (item.classList.contains('active')) {
+                content.style.maxHeight = content.scrollHeight + "px";
+            } else {
+                content.style.maxHeight = null;
+            }
+        }
 
         function convertCurrency() {
             const input = document.getElementById('egp').value;
