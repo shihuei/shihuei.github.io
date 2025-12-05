@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>埃及 13 天 11 夜：探險與記帳</title>
+    <title>埃及 12 天夢幻旅程 (2025)</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -173,6 +173,7 @@
             margin-right: 12px;
             min-width: 55px;
             text-align: center;
+            line-height: 1.2;
         }
         .accordion-item.active .day-badge { background: var(--primary-gold); }
 
@@ -201,12 +202,18 @@
             content: "\f66f"; font-family: "Font Awesome 6 Free"; font-weight: 900;
             color: var(--primary-gold); position: absolute; left: 0; top: 3px; font-size: 0.8rem;
         }
+        
+        /* 地圖與連結樣式 */
         .map-link {
             color: var(--primary-gold-dark); text-decoration: none; font-weight: 700;
             border-bottom: 1px dotted var(--primary-gold);
         }
+        .flight-info {
+            color: var(--primary-blue); font-weight: 500; font-size: 0.9rem;
+            background: #f0f4f8; padding: 2px 6px; border-radius: 4px;
+        }
 
-        /* --- 4. 記帳區塊 (手機版修正重點) --- */
+        /* --- 4. 記帳區塊 --- */
         .spending-section {
             background-color: #F8F9FA;
             border: 2px dashed #e0e0e0;
@@ -221,7 +228,6 @@
             display: flex; justify-content: space-between; align-items: center;
         }
 
-        /* 修正：輸入框群組 */
         .input-group {
             display: flex;
             gap: 8px;
@@ -229,13 +235,11 @@
         }
 
         .input-item {
-            flex: 2; /* 預設佔比 */
-            padding: 10px; border: 1px solid #ddd; border-radius: 8px;
+            flex: 2; padding: 10px; border: 1px solid #ddd; border-radius: 8px;
             font-size: 0.95rem; outline: none; -webkit-appearance: none;
         }
         .input-amount {
-            flex: 1; /* 預設佔比 */
-            padding: 10px; border: 1px solid #ddd; border-radius: 8px;
+            flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 8px;
             font-size: 0.95rem; outline: none; -webkit-appearance: none;
         }
         
@@ -245,49 +249,28 @@
             cursor: pointer; font-weight: 700; white-space: nowrap;
         }
 
-        /* Mobile Responsive for Inputs: 修正手機破圖 */
         @media (max-width: 480px) {
-            .input-group {
-                flex-wrap: wrap; /* 允許換行 */
-            }
-            .input-item {
-                min-width: 100%; /* 手機上名稱佔滿整行 */
-                margin-bottom: 5px;
-            }
-            .input-amount {
-                flex-grow: 1; /* 金額佔滿剩餘空間 */
-            }
-            .btn-add {
-                flex-grow: 0;
-                padding: 10px 20px; /* 按鈕加大 */
-            }
+            .input-group { flex-wrap: wrap; }
+            .input-item { min-width: 100%; margin-bottom: 5px; }
+            .input-amount { flex-grow: 1; }
+            .btn-add { flex-grow: 0; padding: 10px 20px; }
         }
 
-        /* 修正：刪除按鈕列表 */
         .expense-list { list-style: none; padding: 0; margin: 0; font-size: 0.9rem; color: #666; }
         .expense-item {
             display: flex; justify-content: space-between; align-items: center;
             border-bottom: 1px solid #eee; padding: 10px 0;
         }
         
-        /* 修正：更明顯的刪除按鈕 */
         .btn-delete {
-            background: rgba(231, 76, 60, 0.1);
-            color: var(--danger);
-            border: none;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            margin-left: 10px;
-            transition: all 0.2s;
-            -webkit-tap-highlight-color: transparent; /* 移除點擊時的藍框 */
+            background: rgba(231, 76, 60, 0.1); color: var(--danger); border: none;
+            width: 36px; height: 36px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; margin-left: 10px; transition: all 0.2s;
+            -webkit-tap-highlight-color: transparent;
         }
         .btn-delete:active { background: var(--danger); color: white; }
-        .btn-delete i { pointer-events: none; /* 讓點擊穿透圖標直接觸發按鈕 */ }
+        .btn-delete i { pointer-events: none; }
 
         /* --- 5. 總結區塊 --- */
         .total-summary-wrapper { padding: 20px; padding-bottom: 40px;}
@@ -321,8 +304,8 @@
             <div class="avatar-container">
                 <img src="img/family.png" alt="User Avatar" class="avatar">
             </div>
-            <h1>埃及古文明探險</h1>
-            <p>13 天 11 夜 • 隨身行程與記帳本</p>
+            <h1>埃及 12 天夢幻旅程</h1>
+            <p>2025/2/3 - 2/15 • 專屬行程表</p>
         </div>
 
         <div class="dashboard-wrapper">
@@ -331,7 +314,7 @@
                     <h3>開羅天氣</h3>
                     <div style="display:flex; flex-direction:column; align-items:center;">
                         <i class="fas fa-sun weather-icon"></i>
-                        <span style="font-size: 1.6rem; font-weight: 700; color: var(--primary-blue);">26°C</span>
+                        <span style="font-size: 1.6rem; font-weight: 700; color: var(--primary-blue);">20°C</span>
                     </div>
                 </div>
                 <div class="info-card">
@@ -364,27 +347,138 @@
         </div>
 
         <footer>
-            Built for Egypt Trip
+            Have a nice trip!
         </footer>
     </div>
 
     <script>
         const RATE = 0.65; 
-        const STORAGE_KEY = 'egypt_trip_v3';
+        const STORAGE_KEY = 'egypt_trip_2025_feb';
 
+        // 詳細行程資料 (已包含您提供的日期、航班與飯店)
         const schedule = [
-            { day: "Day 1", title: "抵達埃及 - 初見開羅", content: ["抵達 <a href='https://goo.gl/maps/AbCdeFgHiJk' class='map-link' target='_blank'>開羅國際機場 (CAI)</a>", "專車接送前往市區", "入住 <a href='https://goo.gl/maps/LmNoPqRsTuV' class='map-link' target='_blank'>開羅市區酒店</a>", "於 <a href='https://goo.gl/maps/WXYz12345' class='map-link' target='_blank'>金字塔區</a> 附近散步、欣賞夕陽", "前往當地餐廳享用埃及特色晚餐"] },
-            { day: "Day 2", title: "吉薩金字塔 - 飛往亞斯文", content: ["早餐後，前往參觀世界七大奇蹟之一的 <a href='https://goo.gl/maps/PyRaMiDsGiza' class='map-link' target='_blank'>吉薩金字塔群</a>", "朝聖 <a href='https://goo.gl/maps/SpHiNx' class='map-link' target='_blank'>人面獅身像</a>", "體驗沙漠騎駱駝", "參觀 <a href='https://goo.gl/maps/GrAnDEgyptMu' class='map-link' target='_blank'>大埃及博物館 (GEM)</a>", "搭機飛往 <a href='https://goo.gl/maps/AsWaNAirport' class='map-link' target='_blank'>亞斯文 (Aswan)</a>"] },
-            { day: "Day 3", title: "夜訪阿布辛貝", content: ["上午於亞斯文市區自由活動", "搭車穿越沙漠前往 <a href='https://goo.gl/maps/AbUsImBeL' class='map-link' target='_blank'>阿布辛貝</a>", "參觀 <a href='https://goo.gl/maps/RaMsEsSIITemple' class='map-link' target='_blank'>阿布辛貝神殿</a>", "晚間欣賞 <a href='https://goo.gl/maps/SoundLightAbu' class='map-link' target='_blank'>神殿聲光秀</a>"] },
-            { day: "Day 4", title: "努比亞風情 - 入住郵輪", content: ["清晨再次進入神殿，享受寧靜時刻", "返回亞斯文，前往 <a href='https://goo.gl/maps/NuBiAnViLlage' class='map-link' target='_blank'>努比亞村</a>", "體驗搭乘 <a href='https://goo.gl/maps/FeLuCcARide' class='map-link' target='_blank'>風帆船 (Felucca)</a>", "入住 <a href='https://goo.gl/maps/NiLeCrUiSe' class='map-link' target='_blank'>尼羅河河輪</a>"] },
-            { day: "Day 5", title: "菲萊與康翁波", content: ["參觀 <a href='https://goo.gl/maps/PhIlAeTeMple' class='map-link' target='_blank'>菲萊神廟</a>", "遊輪航行", "抵達康翁波，參觀 <a href='https://goo.gl/maps/KoMoMbOTemple' class='map-link' target='_blank'>康翁波神廟 (雙神殿)</a>"] },
-            { day: "Day 6", title: "艾德福與盧克索", content: ["搭乘馬車參觀 <a href='https://goo.gl/maps/EdFuTeMple' class='map-link' target='_blank'>艾德福神殿</a>", "遊輪經伊斯納水閘門", "抵達 <a href='https://goo.gl/maps/LuXoRCiTy' class='map-link' target='_blank'>盧克索</a>", "夜遊 <a href='https://goo.gl/maps/LuXoRTeMple' class='map-link' target='_blank'>盧克索神殿</a>"] },
-            { day: "Day 7", title: "帝王谷與卡納克", content: ["前往西岸參觀 <a href='https://goo.gl/maps/VaLlEyOfKiNgs' class='map-link' target='_blank'>帝王谷</a>", "參觀哈特謝普蘇特女王神殿", "拍照留念 <a href='https://goo.gl/maps/MeMnOnCoLoSsi' class='map-link' target='_blank'>曼儂巨像</a>", "下午參觀東岸 <a href='https://goo.gl/maps/KaRnAkTeMple' class='map-link' target='_blank'>卡納克神殿</a>", "專車前往 <a href='https://goo.gl/maps/HuRgHaDaCiTy' class='map-link' target='_blank'>赫爾達格 (紅海)</a>"] },
-            { day: "Day 8", title: "赫爾達格自由活動", content: ["全日自由活動", "推薦：出海前往 <a href='https://goo.gl/maps/GiFtUnIsLaNd' class='map-link' target='_blank'>基夫頓島</a> 浮潛", "享受飯店全包式設施"] },
-            { day: "Day 9", title: "紅海 - 返回開羅", content: ["享受水上活動或沙漠吉普車", "傍晚搭機飛回 <a href='https://goo.gl/maps/CaIrOCiTy' class='map-link' target='_blank'>開羅</a>", "入住開羅飯店"] },
-            { day: "Day 10", title: "黑白沙漠探險", content: ["專車前往拜哈里耶綠洲", "探索 <a href='https://goo.gl/maps/BlAcKDeSeRt' class='map-link' target='_blank'>黑沙漠</a> 與 <a href='https://goo.gl/maps/WhItEDeSeRt' class='map-link' target='_blank'>白沙漠</a>", "夜宿沙漠星空飯店或露營"] },
-            { day: "Day 11", title: "開羅 - 金字塔下午茶", content: ["欣賞沙漠日出後返回開羅", "於 <a href='https://goo.gl/maps/MeNaHoUsEHToEl' class='map-link' target='_blank'>Mena House</a> 享用金字塔景觀下午茶", "逛哈利利市集"] },
-            { day: "Day 12", title: "開心返家", content: ["前往 <a href='https://goo.gl/maps/CaIrOAiRpOrT' class='map-link' target='_blank'>開羅機場</a>", "搭乘阿聯酋航空返家"] }
+            { 
+                day: "Day 1<br><small>2/3</small>", 
+                title: "台北 ✈️ 杜拜 ✈️ 開羅", 
+                content: [
+                    "<span class='flight-info'>EK387</span> 台北(TPE) 00:20 → 杜拜(DXB) 06:15",
+                    "杜拜轉機 1h 55m",
+                    "<span class='flight-info'>EK927</span> 杜拜(DXB) 08:10 → 開羅(CAI) 10:25",
+                    "抵達開羅，接機",
+                    "入住：<a href='https://www.google.com/maps/search/?api=1&query=Spire+West+Hotel+Giza' class='map-link' target='_blank'>Spire West Hotel</a> (吉薩)"
+                ] 
+            },
+            { 
+                day: "Day 2<br><small>2/4</small>", 
+                title: "吉薩金字塔 - 飛往亞斯文", 
+                content: [
+                    "參觀 <a href='https://goo.gl/maps/PyRaMiDsGiza' class='map-link' target='_blank'>吉薩金字塔群</a>",
+                    "朝聖 <a href='https://goo.gl/maps/SpHiNx' class='map-link' target='_blank'>人面獅身像</a>",
+                    "參觀 <a href='https://goo.gl/maps/GrAnDEgyptMu' class='map-link' target='_blank'>新埃及博物館</a>",
+                    "體驗金字塔區騎駱駝",
+                    "前往開羅機場 T3",
+                    "<span class='flight-info'>MS080</span> 開羅(CAI) 22:00 → 亞斯文(ASW) 23:25",
+                    "入住：<a href='https://www.google.com/maps/search/?api=1&query=Citymax+Hotel+Aswan' class='map-link' target='_blank'>Citymax Hotel Aswan</a>"
+                ] 
+            },
+            { 
+                day: "Day 3<br><small>2/5</small>", 
+                title: "阿斯旺 → 阿布辛貝", 
+                content: [
+                    "專車前往阿布辛貝",
+                    "參觀 <a href='https://goo.gl/maps/RaMsEsSIITemple' class='map-link' target='_blank'>阿布辛貝神殿</a>",
+                    "晚間觀賞 <a href='https://goo.gl/maps/SoundLightAbu' class='map-link' target='_blank'>神殿光影秀</a>",
+                    "入住：<a href='https://www.google.com/maps/search/?api=1&query=Kabara+Nubian+House+Abu+Simbel' class='map-link' target='_blank'>Kabara Nubian House</a>"
+                ] 
+            },
+            { 
+                day: "Day 4<br><small>2/6</small>", 
+                title: "努比亞風情 - 尼羅河郵輪", 
+                content: [
+                    "阿布辛貝返回阿斯旺",
+                    "前往 <a href='https://goo.gl/maps/NuBiAnViLlage' class='map-link' target='_blank'>努比亞村</a> 體驗當地風情",
+                    "登船手續，開始尼羅河之旅",
+                    "入住：河輪 <a href='https://www.google.com/maps/search/?api=1&query=Prince+du+Nile+Cruise' class='map-link' target='_blank'>PRINCE DU NILE</a>"
+                ] 
+            },
+            { 
+                day: "Day 5<br><small>2/7</small>", 
+                title: "菲萊與康翁波", 
+                content: [
+                    "參觀 <a href='https://goo.gl/maps/PhIlAeTeMple' class='map-link' target='_blank'>菲萊神廟</a>",
+                    "遊輪航行",
+                    "參觀 <a href='https://goo.gl/maps/KoMoMbOTemple' class='map-link' target='_blank'>康翁波神廟</a>",
+                    "入住：河輪 PRINCE DU NILE"
+                ] 
+            },
+            { 
+                day: "Day 6<br><small>2/8</small>", 
+                title: "艾德福與盧克索", 
+                content: [
+                    "參觀 <a href='https://goo.gl/maps/EdFuTeMple' class='map-link' target='_blank'>艾德福神殿</a>",
+                    "遊輪航行至盧克索",
+                    "參觀 <a href='https://goo.gl/maps/LuXoRTeMple' class='map-link' target='_blank'>盧克索神殿</a>",
+                    "入住：河輪 PRINCE DU NILE"
+                ] 
+            },
+            { 
+                day: "Day 7<br><small>2/9</small>", 
+                title: "帝王谷 - 前往紅海", 
+                content: [
+                    "參觀西岸 <a href='https://goo.gl/maps/VaLlEyOfKiNgs' class='map-link' target='_blank'>帝王谷</a>",
+                    "參觀東岸 <a href='https://goo.gl/maps/KaRnAkTeMple' class='map-link' target='_blank'>卡納克神殿</a>",
+                    "專車前往赫爾達格 (紅海)",
+                    "入住：<a href='https://www.google.com/maps/search/?api=1&query=Kempinski+Hotel+Soma+Bay' class='map-link' target='_blank'>Kempinski Hotel Soma Bay</a>"
+                ] 
+            },
+            { 
+                day: "Day 8<br><small>2/10</small>", 
+                title: "紅海全日自由活動", 
+                content: [
+                    "赫爾達格 (紅海) 海上活動整日",
+                    "享受度假村設施",
+                    "入住：<a href='https://www.google.com/maps/search/?api=1&query=Kempinski+Hotel+Soma+Bay' class='map-link' target='_blank'>Kempinski Hotel Soma Bay</a>"
+                ] 
+            },
+            { 
+                day: "Day 9<br><small>2/11</small>", 
+                title: "紅海 - 返回開羅", 
+                content: [
+                    "享受紅海時光",
+                    "前往 HRG 機場 T2",
+                    "<span class='flight-info'>MS049</span> 赫爾格達 21:30 → 開羅(CAI) 22:40",
+                    "入住：<a href='https://www.google.com/maps/search/?api=1&query=Maison+7+New+Cairo' class='map-link' target='_blank'>Maison 7 New Cairo</a>"
+                ] 
+            },
+            { 
+                day: "Day 10<br><small>2/12</small>", 
+                title: "黑白沙漠探險", 
+                content: [
+                    "開羅專車前往 <a href='https://goo.gl/maps/BlAcKDeSeRt' class='map-link' target='_blank'>黑白沙漠</a>",
+                    "探索沙漠奇景",
+                    "入住：沙漠星空酒店"
+                ] 
+            },
+            { 
+                day: "Day 11<br><small>2/13</small>", 
+                title: "金字塔景觀午茶", 
+                content: [
+                    "黑白沙漠返回開羅",
+                    "於 <a href='https://www.google.com/maps/search/?api=1&query=Marriott+Mena+House+Cairo' class='map-link' target='_blank'>Mena House Hotel</a> 享用午茶",
+                    "入住：<a href='https://www.google.com/maps/search/?api=1&query=Spire+West+Hotel+Giza' class='map-link' target='_blank'>Spire West Hotel</a>"
+                ] 
+            },
+            { 
+                day: "Day 12<br><small>2/14</small>", 
+                title: "告別埃及 - 返家", 
+                content: [
+                    "整理行囊，前往開羅機場",
+                    "<span class='flight-info'>EK922</span> 開羅(CAI) 16:30 → 杜拜(DXB) 21:45",
+                    "杜拜轉機 5h 55m",
+                    "<span class='flight-info'>EK366</span> 杜拜(DXB) 03:40(+1) → 台北(TPE) 15:35",
+                    "抵達溫暖的家 (2/15)"
+                ] 
+            }
         ];
 
         let expenses = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
@@ -451,7 +545,6 @@
             priceInput.value = '';
         }
 
-        // 將 deleteExpense 設為全域函數，確保 onclick 能呼叫到
         window.deleteExpense = function(dayIndex, itemIndex) {
             if (confirm("確定刪除？")) {
                 expenses[dayIndex].splice(itemIndex, 1);
