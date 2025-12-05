@@ -363,4 +363,297 @@
         <div class="total-summary-wrapper">
             <div class="total-summary">
                 <div style="font-size:1.1rem; opacity:0.9">旅程總消費</div>
-                <div class
+                <div class="total-amount-egp"><span id="grand-total-egp">0</span> <span style="font-size:1rem">EGP</span></div>
+                <div class="total-amount-twd">約合 NT$ <span id="grand-total-twd">0</span></div>
+                <div style="font-size: 0.75rem; margin-top: 15px; opacity: 0.5;">
+                    <i class="fas fa-check-circle"></i> 資料已自動儲存
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            Have a nice trip!
+        </footer>
+    </div>
+
+    <script>
+        const RATE = 0.65; 
+        const STORAGE_KEY = 'egypt_trip_2025_feb';
+
+        // 詳細行程資料 (已包含您提供的日期、航班與飯店)
+        const schedule = [
+            { 
+                day: "Day 1<br><small>2/3</small>", 
+                title: "台北 ✈️ 杜拜 ✈️ 開羅", 
+                content: [
+                    "<span class='flight-info'>EK387</span> 台北(TPE) 00:20 → 杜拜(DXB) 06:15",
+                    "杜拜轉機 1h 55m",
+                    "<span class='flight-info'>EK927</span> 杜拜(DXB) 08:10 → 開羅(CAI) 10:25",
+                    "抵達開羅，接機",
+                    "入住：<a href='https://www.google.com/maps/search/?api=1&query=Spire+West+Hotel+Giza' class='map-link' target='_blank'>Spire West Hotel</a> (吉薩)"
+                ] 
+            },
+            { 
+                day: "Day 2<br><small>2/4</small>", 
+                title: "吉薩金字塔 - 飛往亞斯文", 
+                content: [
+                    "參觀 <a href='https://goo.gl/maps/PyRaMiDsGiza' class='map-link' target='_blank'>吉薩金字塔群</a>",
+                    "朝聖 <a href='https://goo.gl/maps/SpHiNx' class='map-link' target='_blank'>人面獅身像</a>",
+                    "參觀 <a href='https://goo.gl/maps/GrAnDEgyptMu' class='map-link' target='_blank'>新埃及博物館</a>",
+                    "體驗金字塔區騎駱駝",
+                    "前往開羅機場 T3",
+                    "<span class='flight-info'>MS080</span> 開羅(CAI) 22:00 → 亞斯文(ASW) 23:25",
+                    "入住：<a href='https://www.google.com/maps/search/?api=1&query=Citymax+Hotel+Aswan' class='map-link' target='_blank'>Citymax Hotel Aswan</a>"
+                ] 
+            },
+            { 
+                day: "Day 3<br><small>2/5</small>", 
+                title: "阿斯旺 → 阿布辛貝", 
+                content: [
+                    "專車前往阿布辛貝",
+                    "參觀 <a href='https://goo.gl/maps/RaMsEsSIITemple' class='map-link' target='_blank'>阿布辛貝神殿</a>",
+                    "晚間觀賞 <a href='https://goo.gl/maps/SoundLightAbu' class='map-link' target='_blank'>神殿光影秀</a>",
+                    "入住：<a href='https://www.google.com/maps/search/?api=1&query=Kabara+Nubian+House+Abu+Simbel' class='map-link' target='_blank'>Kabara Nubian House</a>"
+                ] 
+            },
+            { 
+                day: "Day 4<br><small>2/6</small>", 
+                title: "努比亞風情 - 尼羅河郵輪", 
+                content: [
+                    "阿布辛貝返回阿斯旺",
+                    "前往 <a href='https://goo.gl/maps/NuBiAnViLlage' class='map-link' target='_blank'>努比亞村</a> 體驗當地風情",
+                    "登船手續，開始尼羅河之旅",
+                    "入住：河輪 <a href='https://www.google.com/maps/search/?api=1&query=Prince+du+Nile+Cruise' class='map-link' target='_blank'>PRINCE DU NILE</a>"
+                ] 
+            },
+            { 
+                day: "Day 5<br><small>2/7</small>", 
+                title: "菲萊與康翁波", 
+                content: [
+                    "參觀 <a href='https://goo.gl/maps/PhIlAeTeMple' class='map-link' target='_blank'>菲萊神廟</a>",
+                    "遊輪航行",
+                    "參觀 <a href='https://goo.gl/maps/KoMoMbOTemple' class='map-link' target='_blank'>康翁波神廟</a>",
+                    "入住：河輪 PRINCE DU NILE"
+                ] 
+            },
+            { 
+                day: "Day 6<br><small>2/8</small>", 
+                title: "艾德福與盧克索", 
+                content: [
+                    "參觀 <a href='https://goo.gl/maps/EdFuTeMple' class='map-link' target='_blank'>艾德福神殿</a>",
+                    "遊輪航行至盧克索",
+                    "參觀 <a href='https://goo.gl/maps/LuXoRTeMple' class='map-link' target='_blank'>盧克索神殿</a>",
+                    "入住：河輪 PRINCE DU NILE"
+                ] 
+            },
+            { 
+                day: "Day 7<br><small>2/9</small>", 
+                title: "帝王谷 - 前往紅海", 
+                content: [
+                    "參觀西岸 <a href='https://goo.gl/maps/VaLlEyOfKiNgs' class='map-link' target='_blank'>帝王谷</a>",
+                    "參觀東岸 <a href='https://goo.gl/maps/KaRnAkTeMple' class='map-link' target='_blank'>卡納克神殿</a>",
+                    "專車前往赫爾達格 (紅海)",
+                    "入住：<a href='https://www.google.com/maps/search/?api=1&query=Kempinski+Hotel+Soma+Bay' class='map-link' target='_blank'>Kempinski Hotel Soma Bay</a>"
+                ] 
+            },
+            { 
+                day: "Day 8<br><small>2/10</small>", 
+                title: "紅海全日自由活動", 
+                content: [
+                    "赫爾達格 (紅海) 海上活動整日",
+                    "享受度假村設施",
+                    "入住：<a href='https://www.google.com/maps/search/?api=1&query=Kempinski+Hotel+Soma+Bay' class='map-link' target='_blank'>Kempinski Hotel Soma Bay</a>"
+                ] 
+            },
+            { 
+                day: "Day 9<br><small>2/11</small>", 
+                title: "紅海 - 返回開羅", 
+                content: [
+                    "享受紅海時光",
+                    "前往 HRG 機場 T2",
+                    "<span class='flight-info'>MS049</span> 赫爾格達 21:30 → 開羅(CAI) 22:40",
+                    "入住：<a href='https://www.google.com/maps/search/?api=1&query=Maison+7+New+Cairo' class='map-link' target='_blank'>Maison 7 New Cairo</a>"
+                ] 
+            },
+            { 
+                day: "Day 10<br><small>2/12</small>", 
+                title: "黑白沙漠探險", 
+                content: [
+                    "開羅專車前往 <a href='https://goo.gl/maps/BlAcKDeSeRt' class='map-link' target='_blank'>黑白沙漠</a>",
+                    "探索沙漠奇景",
+                    "入住：沙漠星空酒店"
+                ] 
+            },
+            { 
+                day: "Day 11<br><small>2/13</small>", 
+                title: "金字塔景觀午茶", 
+                content: [
+                    "黑白沙漠返回開羅",
+                    "於 <a href='https://www.google.com/maps/search/?api=1&query=Marriott+Mena+House+Cairo' class='map-link' target='_blank'>Mena House Hotel</a> 享用午茶",
+                    "入住：<a href='https://www.google.com/maps/search/?api=1&query=Spire+West+Hotel+Giza' class='map-link' target='_blank'>Spire West Hotel</a>"
+                ] 
+            },
+            { 
+                day: "Day 12<br><small>2/14</small>", 
+                title: "告別埃及 - 返家", 
+                content: [
+                    "整理行囊，前往開羅機場",
+                    "<span class='flight-info'>EK922</span> 開羅(CAI) 16:30 → 杜拜(DXB) 21:45",
+                    "杜拜轉機 5h 55m",
+                    "<span class='flight-info'>EK366</span> 杜拜(DXB) 03:40(+1) → 台北(TPE) 15:35",
+                    "抵達溫暖的家 (2/15)"
+                ] 
+            }
+        ];
+
+        let expenses = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+        const listContainer = document.getElementById('itinerary-list');
+
+        function init() {
+            schedule.forEach((item, index) => {
+                let listItems = item.content.map(text => `<li>${text}</li>`).join('');
+
+                const div = document.createElement('div');
+                div.className = 'accordion-item';
+                div.innerHTML = `
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div style="display:flex; align-items:center; overflow:hidden;">
+                            <span class="day-badge">${item.day}</span>
+                            <span class="trip-title">${item.title}</span>
+                        </div>
+                        <i class="fas fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="content-inner">
+                            <ul class="details-list">${listItems}</ul>
+                            
+                            <div class="spending-section">
+                                <div class="spending-header">
+                                    <span><i class="fas fa-coins"></i> 消費紀錄</span>
+                                    <span>小計: <span id="day-total-${index}">0</span> EGP</span>
+                                </div>
+                                <div class="input-group">
+                                    <input type="text" class="input-item" id="item-name-${index}" placeholder="項目 (如:午餐)">
+                                    <input type="number" class="input-amount" id="item-price-${index}" placeholder="金額" inputmode="decimal">
+                                    <button class="btn-add" type="button" onclick="addExpense(${index})">新增</button>
+                                </div>
+                                <ul class="expense-list" id="expense-list-${index}"></ul>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                listContainer.appendChild(div);
+                renderDayExpenses(index);
+            });
+            updateGrandTotal();
+        }
+
+        function addExpense(dayIndex) {
+            const nameInput = document.getElementById(`item-name-${dayIndex}`);
+            const priceInput = document.getElementById(`item-price-${dayIndex}`);
+            const name = nameInput.value.trim();
+            const price = parseFloat(priceInput.value);
+
+            if (!name || isNaN(price) || price < 0) {
+                alert("請填寫正確項目與金額");
+                return;
+            }
+
+            if (!expenses[dayIndex]) expenses[dayIndex] = [];
+            expenses[dayIndex].push({ name: name, price: price });
+            
+            saveData();
+            renderDayExpenses(dayIndex);
+            updateGrandTotal();
+
+            nameInput.value = '';
+            priceInput.value = '';
+        }
+
+        window.deleteExpense = function(dayIndex, itemIndex) {
+            if (confirm("確定刪除？")) {
+                expenses[dayIndex].splice(itemIndex, 1);
+                saveData();
+                renderDayExpenses(dayIndex);
+                updateGrandTotal();
+            }
+        };
+
+        function renderDayExpenses(dayIndex) {
+            const listEl = document.getElementById(`expense-list-${dayIndex}`);
+            const totalEl = document.getElementById(`day-total-${dayIndex}`);
+            
+            if (!expenses[dayIndex] || expenses[dayIndex].length === 0) {
+                listEl.innerHTML = '<li style="text-align:center; padding:10px 0; color:#aaa; font-size:0.85rem;">尚無紀錄</li>';
+                totalEl.innerText = '0';
+                return;
+            }
+
+            let html = '';
+            let dayTotal = 0;
+
+            expenses[dayIndex].forEach((item, idx) => {
+                dayTotal += item.price;
+                html += `
+                    <li class="expense-item">
+                        <span style="font-weight:500;">${item.name}</span>
+                        <div style="display:flex; align-items:center;">
+                            <span style="font-weight:700; color:var(--text-main);">${item.price.toLocaleString()}</span>
+                            <span style="font-size:0.8rem; margin-left:3px;">EGP</span>
+                            <button class="btn-delete" type="button" onclick="deleteExpense(${dayIndex}, ${idx})">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </li>
+                `;
+            });
+
+            listEl.innerHTML = html;
+            totalEl.innerText = dayTotal.toLocaleString();
+
+            const contentDiv = listEl.closest('.accordion-content');
+            if (contentDiv.style.maxHeight && contentDiv.style.maxHeight !== '0px') {
+                contentDiv.style.maxHeight = contentDiv.scrollHeight + "px";
+            }
+        }
+
+        function updateGrandTotal() {
+            let total = 0;
+            Object.values(expenses).forEach(dayList => {
+                dayList.forEach(item => total += item.price);
+            });
+            document.getElementById('grand-total-egp').innerText = total.toLocaleString();
+            document.getElementById('grand-total-twd').innerText = Math.round(total * RATE).toLocaleString();
+        }
+
+        function saveData() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(expenses));
+        }
+
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            const content = header.nextElementSibling;
+            
+            const currentActive = document.querySelector('.accordion-item.active');
+            if(currentActive && currentActive !== item) {
+                currentActive.classList.remove('active');
+                currentActive.querySelector('.accordion-content').style.maxHeight = null;
+            }
+
+            item.classList.toggle('active');
+            if (item.classList.contains('active')) {
+                content.style.maxHeight = content.scrollHeight + "px";
+            } else {
+                content.style.maxHeight = null;
+            }
+        }
+
+        function convertCurrency() {
+            const val = document.getElementById('egp').value;
+            document.getElementById('twd').innerText = val ? Math.round(val * RATE).toLocaleString() : '0';
+        }
+
+        init();
+    </script>
+</body>
+</html>
